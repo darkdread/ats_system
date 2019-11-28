@@ -57,12 +57,19 @@ class atsmaster:
             print(f'{id} failed to submit ats, code failed.')
             return
         
+        ats_code_not_in_module = re.search("You are not registered in (.+?), please", submit_ats_resp.text)
+
+        if ats_code_not_in_module:
+            print(f'{id} failed to submit ats, not registered in module: {ats_code_not_in_module.groups()[0]}')
+            return
+        
         ats_already_submitted = re.search("Please check with your lecturer", submit_ats_resp.text)
 
         if ats_already_submitted:
             print(f'{id} already submitted ats.')
             return
         
+        # print(submit_ats_resp.text)
         print(f'{id} ats submitted!')
         # print(submit_ats_resp.text)
 
@@ -74,7 +81,7 @@ now = datetime.datetime.now()
 ats_list = open("list.txt", "r")
 lines = ats_list.readlines()
 
-linear_time = 1
+linear_time = 0.1
 
 # Calculate time to submit each ats.
 if (now.minute < 15):
