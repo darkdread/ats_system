@@ -5,7 +5,7 @@ RUN apt-get install -y nodejs
 
 WORKDIR /walson_atsapp
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
