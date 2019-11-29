@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
-const child = spawn('python', ['main.py']);
+const child = spawn('python', ['main.py', '420420']);
 
 // use child.stdout.setEncoding('utf8'); if you want text chunks
 child.stdout.on('data', (chunk) => {

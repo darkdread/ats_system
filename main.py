@@ -2,6 +2,8 @@ import datetime
 import requests
 import re
 import time
+import argparse
+import sys
 
 class atsmaster:
 
@@ -73,8 +75,15 @@ class atsmaster:
         print(f'{id} ats submitted!')
         # print(submit_ats_resp.text)
 
+parser = argparse.ArgumentParser()
+parser.add_argument('ats', type=str, help='ATS code (6 int)')
 
-slave = atsmaster("376109")
+args = parser.parse_args()
+
+if args.ats.__len__() != 6:
+    sys.exit("ATS code length not 6.")
+
+slave = atsmaster(args.ats)
 
 now = datetime.datetime.now()
 
