@@ -1,7 +1,6 @@
 const WebSocket = require('ws');
 const { WEBSOCKET_PORT } = require('./constants.js');
 
-
 const wss = new WebSocket.Server({
   port: WEBSOCKET_PORT,
   perMessageDeflate: {
@@ -25,6 +24,7 @@ const wss = new WebSocket.Server({
   }
 });
 
+let historyLog = "";
 let websocketConnections = [];
 
 wss.on('connection', (ws) => {
@@ -34,12 +34,16 @@ wss.on('connection', (ws) => {
     });
 
     ws.send(JSON.stringify({
-        'message': 'hey there'
+        'history': historyLog
     }));
-    // console.log(websocketConnections);
 });
+
+function addLog(text) {
+    historyLog = historyLog + "\n" + text;
+};
 
 module.exports = {
     wss: wss,
-    websocketConnections: websocketConnections
+    websocketConnections: websocketConnections,
+    addLog: addLog,
 }

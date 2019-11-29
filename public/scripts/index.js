@@ -23,6 +23,10 @@ socket.addEventListener('message', function (event) {
         let p = document.createElement("p");
         p.innerHTML = `<span class="error">${obj.error}</span>`;
         document.querySelector("#output").appendChild(p);
+    } else if (obj.history != undefined){
+        let p = document.createElement("pre");
+        p.innerHTML = `${obj.history}`;
+        document.querySelector("#output").appendChild(p);
     }
 });
 

@@ -5,7 +5,10 @@ const app = express();
 const wsserver = require("./websocket-server")
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
+
+// cmd for windows, bash for linux.
 const child = spawn("cmd");
+// const child = spawn("bash");
 
 // use child.stdout.setEncoding('utf8'); if you want text chunks
 child.stdout.on('data', (chunk) => {
@@ -16,6 +19,8 @@ child.stdout.on('data', (chunk) => {
             "output": chunk.toString()
         }));
     });
+
+    wsserver.addLog(chunk.toString());
 });
 
 child.stderr.on('data', (chunk) => {
@@ -26,6 +31,8 @@ child.stderr.on('data', (chunk) => {
             "error": chunk.toString()
         }));
     });
+
+    wsserver.addLog(chunk.toString());
 });
 
 child.on('close', (code) => {
