@@ -56,8 +56,7 @@ class atsmaster:
         ats_code_failed = re.search("Invalid attendance code", submit_ats_resp.text)
 
         if ats_code_failed:
-            print(f'{id} failed to submit ats, code failed.')
-            return
+            sys.exit(f'{id} failed to submit ats, code failed. Exiting program.')
         
         ats_code_not_in_module = re.search("You are not registered in (.+?), please", submit_ats_resp.text)
 
@@ -110,7 +109,7 @@ for line in lines:
         print("End of list.")
         break
 
-    print(f"Waiting {linear_time * 60}s to execute next task.")
+    sys.stdout.write(f"Waiting {linear_time * 60}s to execute next task.")
     time.sleep(linear_time * 60)
 
     i += 1

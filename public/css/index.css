@@ -1,20 +1,23 @@
 body {
-    /* animation: colorchange 1s;
+    animation: colorchange 1s;
     -webkit-animation: colorchange 1s;
-    animation-iteration-count: infinite; */
-
-    background-image: 
-    /* top, transparent red */
-    linear-gradient(
-      rgba(0, 0, 0, 0.5), 
-      rgba(0, 0, 0, 0.5)
-    ),
-    /* your image */
-    url(/images/nigger.jpg);
+    animation-iteration-count: 1;
 }
 
 form {
     text-align: center;
+}
+
+#output {
+    text-align: center;
+}
+
+span.output {
+    color: green;
+}
+
+span.error {
+    color: red;
 }
 
 @keyframes colorchange

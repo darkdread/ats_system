@@ -1,22 +1,35 @@
 const express = require("express");
 const path = require('path');
 const app = express();
+
+const wsserver = require("./websocket-server")
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
-const child = spawn('python', ['main.py', '420420']);
+const child = spawn("cmd");
 
 // use child.stdout.setEncoding('utf8'); if you want text chunks
 child.stdout.on('data', (chunk) => {
-  // data from standard output is here as buffers
+    console.log(`stdout: ${chunk}`);
+
+    wsserver.websocketConnections.forEach(ws => {
+        ws.send(JSON.stringify({
+            "output": chunk.toString()
+        }));
+    });
 });
 
-// since these are streams, you can pipe them elsewhere
 child.stderr.on('data', (chunk) => {
-    console.log(`error: ${chunk}`);
+    console.log(`stderr: ${chunk}`);
+
+    wsserver.websocketConnections.forEach(ws => {
+        ws.send(JSON.stringify({
+            "error": chunk.toString()
+        }));
+    });
 });
 
 child.on('close', (code) => {
-  console.log(`child process exited with code ${code}`);
+    console.log(`child process exited with code ${code}`);
 });
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -28,10 +41,13 @@ app.get("/", (req, res) => {
 });
 
 app.post("/ayylmao", (req, res)=> {
-    console.log(req);
+    // console.log(req);
 
     if (req.method == "POST"){
         let ats_code = req.body.ats_code;
+
+        child.stdin.write(`python -u main.py ${ats_code}\n`);
+
         res.send(ats_code);
     }
 });

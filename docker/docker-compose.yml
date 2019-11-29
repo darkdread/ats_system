@@ -6,7 +6,9 @@ services:
       dockerfile: docker/Dockerfile
     image: atsimage
     volumes:
-      - ..:/atsapp
+      - ..:/walson_atsapp
     ports:
       - "80:80"
+    # tty: true
+    # command: sh
     command: node server.js
