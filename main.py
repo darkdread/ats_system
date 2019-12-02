@@ -64,7 +64,7 @@ class atsmaster:
             print(f'{id} failed to submit ats, not registered in module: {ats_code_not_in_module.groups()[0]}')
             return
         
-        ats_already_submitted = re.search("Please check with your lecturer", submit_ats_resp.text)
+        ats_already_submitted = re.search("You have already submitted your attendance", submit_ats_resp.text)
 
         if ats_already_submitted:
             print(f'{id} already submitted ats.')
