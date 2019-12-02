@@ -93,7 +93,7 @@ linear_time = 0.1
 
 # Calculate time to submit each ats.
 if (now.minute < 15):
-    linear_time = (15-1) / (lines.__len__() + 1)
+    linear_time = (now.minute-1) / (lines.__len__() + 1)
     print(linear_time)
 
 i = 0
